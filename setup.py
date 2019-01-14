@@ -1,9 +1,13 @@
 import setuptools
 import numpy
+import sys
 
 ext_module = setuptools.Extension('mpoints.hybrid_hawkes_exp_cython',
                                   sources=['mpoints/hybrid_hawkes_exp_cython.c'],
-                                  extra_compile_args=["-ffast-math"])
+                                  extra_compile_args=["-ffast-math"],
+                                  libraries=["m"] if any(sys.platform.startswith(x) 
+                                                         for x in 
+                                                         ('linux', 'darwin', 'freebsd')) else [])
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
